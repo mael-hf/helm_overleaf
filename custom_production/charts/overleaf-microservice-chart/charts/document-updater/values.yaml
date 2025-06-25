@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: mael0/overleaf-document-updater
+  repository: overleaf-document-updater
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}-mongo
 spec:
-  serviceName: {{ .Release.Name }}-mongo-service
+  serviceName: mongo
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -19,19 +19,13 @@ spec:
         - name: {{ .Release.Name }}-mongo
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-          - mongod
-          - "--replSet"
-          - rs0
-          - "--bind_ip_all"
           ports:
             - containerPort: 27017
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
-            - name: mongo-init
-              mountPath: /docker-entrypoint-initdb.d/mongodb-init-replica-set.js
-              subPath: mongodb-init-replica-set.js
+            - name: mongo-init-script
+              mountPath: /docker-entrypoint-initdb.d
           env:
             - name: MONGO_INITDB_DATABASE
               value: "sharelatex"
@@ -39,6 +33,6 @@ spec:
         - name: mongo-data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-pvc-mongo
-        - name: mongo-init
+        - name: mongo-init-script
           configMap:
             name: {{ .Release.Name }}-mongo-configmap

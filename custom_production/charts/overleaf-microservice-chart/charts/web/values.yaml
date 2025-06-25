@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: mael0/overleaf-web
+  repository: overleaf-web
   tag: latest
   pullPolicy: IfNotPresent
 
