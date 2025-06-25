@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: redis
-  tag: "5"
+  repository: mael0/redis
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
@@ -19,6 +19,6 @@ affinity: {}
 
 persistence:
   enabled: true
-  storageClass: "standard"
+  storageClass: "csi-sc-cinder"
   accessModes: ReadWriteOnce
   size: 1Gi
