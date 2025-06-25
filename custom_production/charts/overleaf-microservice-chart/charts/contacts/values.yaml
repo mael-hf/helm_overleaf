@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: overleaf-contacts
+  repository: mael0/overleaf-contacts
   tag: latest
   pullPolicy: IfNotPresent
 

@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: overleaf-frontend
+  repository: mael0/overleaf-frontend
   tag: latest
   pullPolicy: IfNotPresent
 

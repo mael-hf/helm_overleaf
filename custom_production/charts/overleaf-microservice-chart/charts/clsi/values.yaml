@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: overleaf-clsi
+  repository: mael0/overleaf-clsi
   tag: "latest"
   pullPolicy: IfNotPresent
 
@@ -20,16 +20,16 @@ affinity: {}
 persistence:
   clsiCache:
     enabled: true
-    storageClass: standard
+    storageClass: csi-sc-cinder
     accessModes: ReadWriteOnce
     size: 1Gi
   clsiOutput:
     enabled: true
-    storageClass: standard
+    storageClass: csi-sc-cinder
     accessModes: ReadWriteOnce
     size: 1Gi
 
 env:
-  DOCKER_RUNNER: "true"
-  TEXLIVE_IMAGE: "texlive-full"
+  DOCKER_RUNNER: "false"
+  TEXLIVE_IMAGE: texlive/texlive
   COMPILES_HOST_DIR: "/tmp/compiles"

@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: overleaf-history-v1
+  repository: mael0/overleaf-history-v1
   tag: latest
   pullPolicy: IfNotPresent
 
