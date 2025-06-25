@@ -1,6 +1,7 @@
 volumes:
   clsi-cache:
   clsi-output:
+  compiles-data:
   filestore-public-files:
   filestore-template-files:
   filestore-uploads:
@@ -22,12 +23,13 @@ services:
     env_file:
       - prod.env
     environment:
-      - DOCKER_RUNNER=false
+      - DOCKER_RUNNER=true
       - TEXLIVE_IMAGE=texlive-full # docker build texlive -t texlive-full
       - COMPILES_HOST_DIR=${PWD}/compiles
     user: root
     volumes:
-      - ./compiles:/overleaf/services/clsi/compiles
+      - ${PWD}/compiles:/overleaf/services/clsi/compiles
+      - ${DOCKER_SOCKET_PATH:-/var/run/docker.sock}:/var/run/docker.sock
       - clsi-cache:/overleaf/services/clsi/cache
       - clsi-output:/overleaf/services/clsi/output
 
@@ -69,9 +71,11 @@ services:
       OVERLEAF_EDITOR_PROJECT_BLOBS_BUCKET: "/buckets/project_blobs"
       OVERLEAF_EDITOR_ZIPS_BUCKET: "/buckets/zips"
       PERSISTOR_BACKEND: fs
+    restart: always
     volumes:
         - history-v1-buckets:/buckets
-
+    depends_on:
+        - mongo
   mongo:
     image: mongo:6.0
     command: --replSet overleaf
@@ -87,7 +91,6 @@ services:
       # replica set. This override is not needed when running the setup after
       # starting up mongo.
       - mongo:127.0.0.1
-    restart: always
 
   notifications:
     image: overleaf-notifications
@@ -121,10 +124,11 @@ services:
       - EMAIL_CONFIRMATION_DISABLED=true
       - NODE_ENV=production
       - OVERLEAF_ALLOW_PUBLIC_ACCESS=true
-    command: ["node", "app.mjs"]
+    command: ["node", "app.js"]
     volumes:
       - sharelatex-data:/var/lib/overleaf
       - web-data:/overleaf/services/web/data
+      - ${PWD}/compiles:/overleaf/services/web/data/compiles
     depends_on:
       - mongo
       - redis
@@ -147,8 +151,8 @@ services:
   #   ports:
   #     - "127.0.0.1:80:3808"
   #   volumes:
-  #     - ./webpack.config.prod.js:/overleaf/services/web/webpack.config.prod.js
-
+  #     - ./webpack.config.prod.js:/overleaf/services/web/webpack.config.prod.js  
+      
   # webpack:
   #   image: overleaf-webpack
   #   command: ["npx", "webpack", "serve", "--config", "webpack.config.dev-env.js"]

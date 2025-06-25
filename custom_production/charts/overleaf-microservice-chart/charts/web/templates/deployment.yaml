@@ -17,7 +17,7 @@ spec:
       initContainers:
         - name: init-chown
           image: alpine:latest  # Une image légère qui contient la commande `chown`
-          command: ["sh", "-c", "chown -R 1000:1000 /var/lib/overleaf && chown -R 1000:1000 /overleaf/services/web/data", "&&", 'sh', '-c', 'until nc -z mongo 27017; do echo waiting for mongo; sleep 2; done;']
+          command: ["sh", "-c", "chown -R 1000:1000 /var/lib/overleaf && chown -R 1000:1000 /overleaf/services/web/data"]
           volumeMounts:
             - name: sharelatex-data
               mountPath: /var/lib/overleaf
