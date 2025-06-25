@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: mael0/overleaf-filestore
+  repository: overleaf-filestore
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -13,19 +13,19 @@ persistence:
   publicFiles:
     size: 1Gi
     accessModes: ReadWriteOnce
-    className: csi-sc-cinder
+    className: standard
   templateFiles:
     size: 1Gi
     accessModes: ReadWriteOnce
-    className: csi-sc-cinder
+    className: standard
   uploads:
     size: 1Gi
     accessModes: ReadWriteOnce
-    className: csi-sc-cinder
+    className: standard
   userFiles:
     size: 1Gi
     accessModes: ReadWriteOnce
-    className: csi-sc-cinder
+    className: standard
 
 resources: {}
 

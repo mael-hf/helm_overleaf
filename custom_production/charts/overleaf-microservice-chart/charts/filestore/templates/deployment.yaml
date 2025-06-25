@@ -17,7 +17,7 @@ spec:
       initContainers:
         - name: init-chown
           image: alpine:latest  # Une image légère qui contient la commande `chown`
-          command: ["sh", "-c", "chown -R 1000:1000 /overleaf/services/filestore/public_files && chown -R 1000:1000 /overleaf/services/filestore/template_files && chown -R 1000:1000 /overleaf/services/filestore/uploads && chown -R 1000:1000 /overleaf/services/filestore/user_files"]
+          command: ["sh", "-c", "chown -R 1000:1000 /overleaf/services/filestore/public_files && chown -R 1000:1000 /overleaf/services/filestore/template_files && chown -R 1000:1000 /overleaf/services/filestore/uploads && chown -R 1000:1000 /overleaf/services/filestore/user_files", "&&", 'sh', '-c', 'until nc -z mongo 27017; do echo waiting for mongo; sleep 2; done;']
           volumeMounts:
             - name: public-files
               mountPath: /overleaf/services/filestore/public_files

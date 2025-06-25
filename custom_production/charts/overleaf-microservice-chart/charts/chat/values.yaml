@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: mael0/overleaf-chat
+  repository: overleaf-chat
   tag: latest
   pullPolicy: IfNotPresent
 

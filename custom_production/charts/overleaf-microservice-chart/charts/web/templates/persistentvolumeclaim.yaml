@@ -8,7 +8,7 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.sharelatexData.size }}
-  storageClassName: csi-sc-cinder
+  storageClassName: standard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -20,4 +20,4 @@ spec:
   resources:
     requests:
       storage: {{ .Values.persistence.webData.size }}
-  storageClassName: csi-sc-cinder
+  storageClassName: standard
